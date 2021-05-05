@@ -1,8 +1,8 @@
-import { Application } from 'express';
-import { graphqlHTTP } from 'express-graphql';
-import { GraphQLObjectType, GraphQLSchema } from 'graphql';
+import {Application} from 'express';
+import {graphqlHTTP} from 'express-graphql';
+import {GraphQLObjectType, GraphQLSchema} from 'graphql';
 
-import { Settings } from './Types/settings';
+import {Settings} from './Types/settings';
 
 export * as GraphQL from 'graphql';
 
@@ -13,7 +13,13 @@ export default (settings: Settings, fields?: any, mutations?: any) => (app: Appl
       description: 'Root Query',
       fields: () => fields,
     }),
-    mutation: mutations,
+    mutation: mutations
+      ? new GraphQLObjectType({
+          name: 'Mutation',
+          description: 'Root Mutation',
+          fields: () => mutations,
+        })
+      : undefined,
   });
 
   app.get(settings.path, graphqlHTTP({ schema: rootSchema, graphiql: settings.interface || true }));
