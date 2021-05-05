@@ -1,12 +1,12 @@
-import { Application } from 'express';
-import { graphqlHTTP } from 'express-graphql';
-import { GraphQLObjectType, GraphQLSchema } from 'graphql';
+import {Application} from 'express';
+import {graphqlHTTP} from 'express-graphql';
+import {GraphQLObjectType, GraphQLSchema} from 'graphql';
 
-import { Settings } from './Types/settings';
+import {Settings} from './Types/settings';
 
 export * as GraphQL from 'graphql';
 
-export default (fields: any, mutations: any, settings: Settings) => (app: Application) => {
+export default (settings: Settings, fields?: any, mutations?: any) => (app: Application) => {
   const rootSchema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: 'RootQuery',
